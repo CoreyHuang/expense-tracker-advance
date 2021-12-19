@@ -1,0 +1,43 @@
+<form class="row m-0 justify-content-center" action="#" method="POST" style="width: 100%;">
+  <div class="text-center mb-4">
+    <h1 class="h3 mb-3 font-weight-normal">輸入花費</h1>
+  </div>
+  <div class="form-label-group align-self-center">
+    <label for="">日期</label>
+    <div class="row justify-content-center mt-2">
+      <button class="btn btn-lg btn-primary btn-block col-3" type="button"style="min-width:70px;">現時</button>
+      <input id="inputDate" type="date" name="Date" class="col-7" style="margin-left:15px;">
+    </div>
+  </div>
+
+  <div class="form-label-group mt-3 align-self-center">
+    <label for="">類別</label>
+    <div class="row justify-content-center m-0 mt-2">
+      <select id="category" class="col-7">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="opel">Opel</option>
+      </select>
+      <a href="/" class="col-3 row  justify-content-center" style="margin-left:0px;">
+        <button class="btn btn-lg btn-primary btn-block" type="button" style="min-width:90px;">
+          +類別</button>
+      </a>
+    </div>
+  </div>
+
+  <div class="form-label-group mt-3 align-self-center">
+    <label for="inputPrice">價格</label>
+    <input id="inputPrice" type="number" name="inputPrice" class="form-control mt-2" placeholder="價格" required>
+  </div>
+  <br />
+
+  <div class="form-label-group mt-3 align-self-center row justify-content-center align-content-center">
+    <div class="p-2 text-center col-4 align-self-center row align-content-center justify-content-center">
+      <input id="shareCheck" type="checkbox" name="shareCheck" class="col-sm-6 col-xs-12 align-self-center"
+        style="width:30px;height:30px;align-items: center;" value="sharePrice">
+      <p class="col-sm-6 col-xs-12 align-self-center mb-0">Share</p>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block col-6 align-self-center" type="submit">送出</button>
+  </div>
+</form>
