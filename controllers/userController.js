@@ -10,7 +10,7 @@ const userController = {
   test: (req, res) => {
 
   
-    res.render('costInput')
+    res.render('signin')
   }
 }
 
