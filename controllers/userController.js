@@ -10,8 +10,8 @@ const userController = {
   test: (req, res) => {
 
   
-    res.render('category')
-    // res.render('signup')
+    res.render('costQuery')
+    // res.render('category')
   }
 }
 
