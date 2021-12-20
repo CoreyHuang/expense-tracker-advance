@@ -10,7 +10,7 @@ const userController = {
   test: (req, res) => {
 
   
-    res.render('costQueryMonth')
+    res.render('costQueryRange')
     // res.render('category')
   }
 }
