@@ -24,95 +24,14 @@
       </tr>
     </thead>
     <tbody>
+      {{#each allPayment}}
       <tr>
-        <th scope="row">2020/12/12</th>
-        <td>qwdqw</td>
-        <td>32</td>
+        <th scope="row">{{moment this.updatedAt}}</th>
+        <td>{{this.Category.name}}</td>
+        <td>{{this.price}}</td>
       </tr>
-      <tr>
-        <th scope="row">2020/12/12</th>
-        <td>wefw</td>
-        <td>421</td>
-      </tr>
-      <tr>
-        <th scope="row">2020/12/12</th>
-        <td>wefw</td>
-        <td>4231</td>
-      </tr>
-      <tr>
-        <th scope="row">2020/12/12</th>
-        <td>wefw</td>
-        <td>123</td>
-      </tr>
-      <tr>
-        <th scope="row">2020/12/12</th>
-        <td>wefw</td>
-        <td>32</td>
-      </tr>
+      {{/each}}
     </tbody>
   </table>
-
-
-
-  {{!-- <table class="table table-striped mt-3">
-    <thead>
-      <tr>
-        <th scope="col">日期</th>
-        <th scope="col">金額</th>
-        <th scope="col">類別</th>
-        <th scope="col">類別</th>
-        <th scope="col">類別</th>
-        <th scope="col">類別</th>
-        <th scope="col">類別</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">2020/12/12</th>
-        <td>qwdqw</td>
-        <td>32</td>
-        <td>32</td>
-        <td>32</td>
-        <td>32</td>
-        <td>32</td>
-      </tr>
-      <tr>
-        <th scope="row">2020/12/12</th>
-        <td>wefw</td>
-        <td>421</td>
-          <td>32</td>
-          <td>32</td>
-          <td>32</td>
-          <td>32</td>
-      </tr>
-      <tr>
-        <th scope="row">2020/12/12</th>
-        <td>wefw</td>
-        <td>4231</td>
-          <td>32</td>
-          <td>32</td>
-          <td>32</td>
-          <td>32</td>
-      </tr>
-      <tr>
-        <th scope="row">2020/12/12</th>
-        <td>wefw</td>
-        <td>123</td>
-          <td>32</td>
-          <td>32</td>
-          <td>32</td>
-          <td>32</td>
-      </tr>
-      <tr>
-        <th scope="row">2020/12/12</th>
-        <td>wefw</td>
-        <td>32</td>
-          <td>32</td>
-          <td>32</td>
-          <td>32</td>
-          <td>32</td>
-      </tr>
-    </tbody>
-  </table> --}}
 
 </div>
