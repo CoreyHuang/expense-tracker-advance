@@ -25,6 +25,8 @@ router.get('/signIn', userController.getSignInPage)
 router.get('/signUp', userController.getSignUpPage)
 router.post('/signUp', userController.signUp)
 router.get('/costInput',costController.getCostInputPage)
+router.get('/costQuery', costController.getCostQueryPage)
+router.get('/logout', userController.logout)
 
 router.get('*', userController.getSignInPage)
 module.exports = router

@@ -4,8 +4,12 @@
 const costController = {
 
   getCostInputPage: (req, res) => {
-    console.log('user', req.user)
     res.render('costInput')
+  },
+
+  getCostQueryPage: (req, res) => {
+
+    res.render('costQuery')
   }
 } 
 
