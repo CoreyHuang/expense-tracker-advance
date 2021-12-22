@@ -1,10 +1,11 @@
-<form class="row mx-0 justify-content-center" action="/signin" method="POST" style="width: 100%;">
+<form class="row mx-0 justify-content-center" action="/signIn" method="POST" style="width: 100%;">
   <div class="text-center mb-4">
     <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
   </div>
   <div class="form-label-group mt-3">
     <label for="inputAccount">Account</label>
-    <input id="inputAccount" type="text" name="account" class="form-control" placeholder="Account" required autofocus>
+    <input id="inputAccount" type="text" name="account" class="form-control" placeholder="Account" required autofocus
+      value="{{signInInput}}">
   </div>
   <div class="form-label-group mt-3">
     <label for="inputPassword">Password</label>

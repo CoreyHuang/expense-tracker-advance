@@ -9,10 +9,18 @@ const userController = {
 
   test: (req, res) => {
 
-  
-    res.render('costQueryRange')
-    // res.render('category')
-  }
+    // console.log('fas', req.body)
+    // res.render('signIn')
+    res.render('category')
+  },
+
+  getSignInPage: (req, res) => {
+    return res.render('signIn')
+  },
+
+
+
+
 }
 
 module.exports = userController
