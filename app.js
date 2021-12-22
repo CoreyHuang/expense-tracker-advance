@@ -5,6 +5,7 @@ const app = express()
 const post = 3000
 const passport = require('./config/passport')
 const flash = require('connect-flash')
+const d = require('./components/debug')
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
@@ -19,7 +20,8 @@ app.use(flash())
 app.use((req, res, next) => {
   res.locals.user = req.user
   res.locals.signInInput = req.flash('signInInput')[0]
-
+  res.locals.signUpInput = req.flash('signUpInput')[0]
+  
   next()
 })
 

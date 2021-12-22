@@ -22,6 +22,8 @@ router.post('/signIn', passport.authenticate('local', { failureRedirect: '/signI
     res.redirect('/costInput');
   })
 router.get('/signIn', userController.getSignInPage)
+router.get('/signUp', userController.getSignUpPage)
+router.post('/signUp', userController.signUp)
 router.get('/costInput',costController.getCostInputPage)
 
 router.get('*', userController.getSignInPage)
