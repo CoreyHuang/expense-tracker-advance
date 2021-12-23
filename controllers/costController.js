@@ -49,14 +49,38 @@ const costController = {
       include: [Category]
     })
       .then((allPayment) => {
-        d('allPayment', allPayment)
+        // d('allPayment', allPayment)
         res.render('costQuery', { allPayment })
       })
       .catch((err) => { console.log(err) })
   },
 
   getNewCategoryPage: (req, res) => {
-    
+    res.render('category')
+  },
+
+  postNewCategory: (req, res) => {
+    const { inputCategory } = req.body
+    if (inputCategory.trim().length > 5) return res.redirect('/costInput/category')
+    User.findByPk(req.user.id, {
+      include: [{ model: Category, as: 'ownCategory' }]
+    })
+      .then((user) => {
+        if (user.toJSON().ownCategory.find((category) => category.name === inputCategory.trim())) {
+          d('類別含重複名稱')
+          return res.redirect('/costInput/category')
+        }
+        Category.create({ name: inputCategory.trim() })
+          .then((category) => {
+            OwnCategory.create({ userId: req.user.id, categoryId: category.id})
+              .then(() => res.redirect('/costInput'))
+              .catch((err) => { console.log(err) })
+          })
+          .catch((err) => { console.log(err) })
+      })
+      .catch((err) => { console.log(err) })
+
+
   },
 }
 

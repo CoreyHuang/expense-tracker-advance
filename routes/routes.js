@@ -27,6 +27,8 @@ router.post('/signUp', userController.signUp)
 router.get('/costInput',costController.getCostInputPage)
 router.post('/costInput', costController.postCost)
 router.get('/costInput/category', costController.getNewCategoryPage)
+router.post('/costInput/category', costController.postNewCategory)
+
 router.get('/costQuery', costController.getCostQueryPage)
 router.get('/logout', userController.logout)
 
