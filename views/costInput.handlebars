@@ -4,22 +4,24 @@
   </div>
   <div class="form-label-group align-self-center">
     <label for="">日期</label>
-    <div class="row justify-content-center mt-2">
-      <button class="btn btn-lg btn-primary btn-block col-3" type="button"style="min-width:70px;">現時</button>
-      <input id="inputDate" type="date" name="Date" class="col-7" style="margin-left:15px;">
+    <div class="row m-0 justify-content-center mt-2" style="max-height: 42px;">
+      {{!-- <button class="btn btn-lg btn-primary btn-block col-3" type="button" style="min-width:70px;">現時</button>
+      --}}
+      <input id="inputDate" type="date" name="Date" class="col-10 p-2" style="" value="{{moment}}">
     </div>
   </div>
 
   <div class="form-label-group mt-3 align-self-center">
     <label for="">類別</label>
-    <div class="row justify-content-center m-0 mt-2">
-      <select id="category" class="col-7">
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="opel">Opel</option>
+    <div class="row justify-content-center m-0 mt-2" style="max-height: 42px;">
+      <select id="category" class="col-7" name="category">
+        {{#each categories}}
+          <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
       </select>
-      <a href="/" class="col-3 row  justify-content-center" style="margin-left:0px;">
-        <button class="btn btn-lg btn-primary btn-block" type="button" style="min-width:90px;">
+      <a href="/costInput/category" class="col-3 row m-0 justify-content-center" style="margin-left:0px;">
+        <button class="btn btn-lg btn-primary btn-block" type="button"
+          style="min-width:90px;max-height:42px;line-height:24px;">
           +類別</button>
       </a>
     </div>
@@ -27,14 +29,16 @@
 
   <div class="form-label-group mt-3 align-self-center">
     <label for="inputPrice">價格</label>
-    <input id="inputPrice" type="number" name="inputPrice" class="form-control mt-2" placeholder="價格" required>
+    <div class="row justify-content-center m-0 mt-2 ">
+      <input id="inputPrice" type="number" name="inputPrice" class="col-10 p-2" placeholder="價格" required>
+    </div>
   </div>
   <br />
 
   <div class="form-label-group mt-3 align-self-center row justify-content-center align-content-center">
     <div class="p-2 text-center col-4 align-self-center row align-content-center justify-content-center">
       <input id="shareCheck" type="checkbox" name="shareCheck" class="col-sm-6 col-xs-12 align-self-center"
-        style="width:30px;height:30px;align-items: center;" value="sharePrice">
+        style="width:30px;height:30px;align-items: center;">
       <p class="col-sm-6 col-xs-12 align-self-center mb-0">Share</p>
     </div>
 
