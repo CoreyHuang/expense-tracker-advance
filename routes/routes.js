@@ -30,6 +30,7 @@ router.get('/costInput/category', costController.getNewCategoryPage)
 router.post('/costInput/category', costController.postNewCategory)
 
 router.get('/costQuery', costController.getCostQueryPage)
+router.get('/costQuery/:queryItem', costController.getCostQueryRange)
 router.get('/logout', userController.logout)
 
 router.get('*', userController.getSignInPage)
