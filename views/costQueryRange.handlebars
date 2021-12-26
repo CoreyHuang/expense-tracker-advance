@@ -15,20 +15,48 @@
     </li>
   </ul>
 
-  <form class="row justify-content-center m-0" action="/" method="POST" style="width: 100%;">
+  <form class="row justify-content-center m-0" action="/costQuery/range/range" method="get" style="width: 100%;">
 
     <div class="form-label-group mt-5 align-self-center">
       <label for="startDate">起始日期 : </label>
       <input id="startDate" type="date" name="startDate" class="form-control mt-2"
-        required autofocus>
+        required autofocus value="{{startDate}}">
     </div>
     <div class="form-label-group mt-3 align-self-center">
       <label for="endDate">結算日期 : </label>
       <input id="endDate" type="date" name="endDate" class="form-control mt-2"
-        required>
+        required value="{{endDate}}">
     </div>
     <br />
     <button class="btn btn-lg btn-primary btn-block col-6 mt-5" type="submit">查詢</button>
   </form>
+
+  {{#if sortResult}}
+  <table class="table table-striped mt-4 mb-1">
+    <thead>
+      <tr>
+        <th scope="col">總額</th>
+        <th scope="col">Top-1</th>
+        <th scope="col">Top-2</th>
+        <th scope="col">Top-3</th>
+        <th scope="col">Top-4</th>
+        <th scope="col">Top-5</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each sortResult}}
+      <tr>
+        <td scope="row" class="p-0" colspan=6>{{this.startDate}} ~ {{this.endDate}}</td>
+      </tr>
+      <tr>
+        <td valign="middle">{{this.price}}</td>
+        {{#each this.category}}
+        <td>{{this.name}}: {{this.price}}<br>({{this.percentage}}%)</td>
+        {{/each}}
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{/if}}
 
 </div>
