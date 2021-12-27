@@ -47,7 +47,8 @@ const costController = {
   getCostQueryPage: (req, res) => {
     Payment.findAll({
       raw: true, nest: true,
-      where: { userId: req.user.id }, limit: 20, order: [['updatedAt', 'DESC']],
+      where: { userId: req.user.id, isShare: false },
+      limit: 20, order: [['createdAt', 'DESC']],
       include: [Category]
     })
       .then((allPayment) => {
@@ -260,7 +261,7 @@ const costController = {
           userId: req.user.id, isShare: false,
           createdAt: { [Op.between]: [startDate, endDate] }
         },
-        include: [Category], order: [['updatedAt', 'DESC']]
+        include: [Category], order: [['createdAt', 'DESC']]
       })
         .then((payments) => {
           // d('payments', payments)
@@ -334,6 +335,22 @@ const costController = {
     }
     return res.render('costQueryRange', { startDate, endDate })
   },
+
+  getCostQuerySharePage: (req, res) => {
+    const share = true
+    Payment.findAll({
+      raw: true, nest: true,
+      where: { userId: req.user.id, isShare: true, isShareCheck: true, shareUserId: req.user.findShareUser[0].id },
+      limit: 20, order: [['createdAt', 'DESC']],
+      include: [Category]
+    })
+      .then((allPayment) => {
+        // d('allPayment', allPayment)
+        res.render('costQuery', { allPayment, share })
+      })
+      .catch((err) => { console.log(err) })
+  },
+
 
 }
 

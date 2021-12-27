@@ -13,6 +13,17 @@
     <li class="nav-item">
       <a class="nav-link " href="/costQuery/range">範圍查詢</a>
     </li>
+  {{#if share}}
+    <li class="nav-item">
+      <a class="nav-link " href="/">未入帳</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="/">費用確認</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="/">被退回</a>
+    </li>
+  {{/if}}
   </ul>
 
   <table class="table table-striped mt-3">
@@ -26,7 +37,7 @@
     <tbody>
       {{#each allPayment}}
       <tr>
-        <th scope="row">{{moment this.updatedAt}}</th>
+        <th scope="row">{{moment this.createdAt}}</th>
         <td>{{this.Category.name}}</td>
         <td>{{this.price}}</td>
       </tr>
