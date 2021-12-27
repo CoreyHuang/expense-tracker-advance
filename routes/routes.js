@@ -34,5 +34,8 @@ router.get('/costQuery/:queryItem', costController.getCostQueryRange)
 router.get('/costQuery/:queryItem/range', costController.getCostQueryForSearch)
 router.get('/logout', userController.logout)
 
+router.get('/users/setting', userController.getSettingPage)
+router.post('/users/setting', userController.postSetting)
+
 router.get('*', userController.getSignInPage)
 module.exports = router

@@ -31,9 +31,11 @@ passport.serializeUser((user, cb) => {
 });
 
 passport.deserializeUser((id, cb) => {
-  User.findByPk(id).then((user) => {
+  User.findByPk(id, { include: [{ model: User, as: 'findShareUser'}]})
+  .then((user) => {
     return cb(null, user.toJSON())
-  });
+  })
+  .catch (err => console.log(err))
 });
 
 module.exports = passport;

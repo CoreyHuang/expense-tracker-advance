@@ -1,0 +1,66 @@
+<form class="row m-0 justify-content-center" action="/users/setting" method="POST" style="width: 100%;">
+  <div class="text-center mb-4">
+    <h1 class="h3 mb-3 font-weight-normal">修改設定</h1>
+  </div>
+  {{!-- <div class="form-label-group align-self-center">
+    <label for="">日期</label>
+    <div class="row m-0 justify-content-center mt-2" style="max-height: 42px;">
+      <input id="inputDate" type="date" name="Date" class="col-10 p-2" style="" value="{{moment}}">
+    </div>
+  </div> --}}
+
+
+
+  <div class="form-label-group mt-3 align-self-center">
+    <label for="account">帳號</label>
+    <div class="row justify-content-center m-0 mt-2 ">
+      <input id="account" type="text" name="account" class="col-10 p-2" readonly value="{{user.name}}">
+    </div>
+  </div>
+  <br />
+
+  <div class="form-label-group mt-3 align-self-center">
+    <label for="inputPassword">密碼</label>
+    <div class="row justify-content-center m-0 mt-2 ">
+      <input id="inputPassword" type="password" name="inputPassword" class="col-10 p-2" placeholder="密碼輸入" required>
+    </div>
+  </div>
+  <br />
+
+  <div class="form-label-group mt-3 align-self-center">
+    <label for="inputPasswordCheck">密碼確認</label>
+    <div class="row justify-content-center m-0 mt-2 ">
+      <input id="inputPasswordCheck" type="password" name="inputPasswordCheck" class="col-10 p-2" placeholder="密碼確認"
+        required>
+    </div>
+  </div>
+  <br />
+
+  <div class="form-label-group mt-3 align-self-center">
+    <label for="inputEmail">Email(非必填)</label>
+    <div class="row justify-content-center m-0 mt-2 ">
+      <input id="inputEmail" type="email" name="inputEmail" class="col-10 p-2" placeholder="Email input"
+        value="{{user.email}}">
+    </div>
+  </div>
+  <br />
+
+  <div class="form-label-group mt-3 align-self-center">
+    <label for="inputShare">Share(非必填)</label>
+    <div class="row justify-content-center m-0 mt-2 ">
+      <input id="inputShare" type="text" name="inputShare" class="col-10 p-2" placeholder="輸入帳號或email，已增加共享對象" value="{{#each user.findShareUser}}{{#if this.email}}{{this.email}}{{else}}{{this.name}}{{/if}}{{/each}}">
+    </div>
+  </div>
+  <br />
+
+  <div class="form-label-group mt-3 align-self-center row justify-content-center align-content-center">
+    {{!-- <div class="p-2 text-center col-4 align-self-center row align-content-center justify-content-center">
+      <input id="shareCheck" type="checkbox" name="shareCheck" class="col-sm-6 col-xs-12 align-self-center"
+        style="width:30px;height:30px;align-items: center;">
+      <p class="col-sm-6 col-xs-12 align-self-center mb-0">Share</p>
+    </div> --}}
+
+    <button class="btn btn-lg btn-primary btn-block col-6 align-self-center" type="submit">送出</button>
+  </div>
+  <input type="hidden" name="CSRF" value="{{CSRF}}">
+</form>
