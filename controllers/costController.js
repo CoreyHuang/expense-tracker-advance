@@ -541,7 +541,20 @@ const costController = {
             res.render('costQueryUnconfirmed', { allPayment, CSRF: bcrypt.hashSync(req.user.name, 10) })
           })
           .catch((err) => { console.log(err) })
+        break;
 
+      case 'returned':
+        Payment.findAll({
+          raw: true, nest: true,
+          where: { userId: req.user.id, isShare: true, isShareCheck: false, shareUserId: req.user.findShareUser[0].id, isSendBack: true },
+          order: [['createdAt', 'DESC']],
+          include: [Category]
+        })
+          .then((allPayment) => {
+            // d('allPayment', allPayment)
+            res.render('costQueryReturn', { allPayment, CSRF: bcrypt.hashSync(req.user.name, 10) })
+          })
+          .catch((err) => { console.log(err) })
         break;
 
       default:
@@ -639,8 +652,11 @@ const costController = {
 
 
   postQueryShare: async (req, res) => {
-    const { paymentId, csrf } = req.body
+    const { paymentId, csrf, modifyCost } = req.body
     const { queryItem } = req.params
+    // d('csrf', bcrypt.compareSync(req.user.name, csrf))
+    if (!(await bcrypt.compareSync(req.user.name, csrf)))
+      return res.redirect('back')
 
     switch (queryItem) {
 
@@ -660,10 +676,10 @@ const costController = {
       case 'returned':
         Payment.findByPk(paymentId)
           .then((payment) => {
-            payment.update({ isSendBack: true })
+            payment.update({ price: modifyCost, isSendBack: false })
               .then((data) => {
                 // d('data', data)
-                return res.json({ status: '200', result: 'success' })
+                return res.redirect('back')
               })
               .catch((err) => { console.log(err) })
           })
@@ -672,15 +688,9 @@ const costController = {
 
       default:
     }
-
-
-    // d('csrf', bcrypt.compareSync(req.user.name, csrf))
-    if (!(await bcrypt.compareSync(req.user.name, csrf)))
-      return res.redirect('/costQueryShare/unconfirmed')
-
-
-
   },
+
+  
 
 }
 

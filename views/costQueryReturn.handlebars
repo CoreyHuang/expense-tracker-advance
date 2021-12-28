@@ -1,0 +1,83 @@
+<div class="row mx-0 justify-content-start">
+
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" href="/costQueryShare">最近</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/costQueryShare/week">每週</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/costQueryShare/month">每月</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="/costQueryShare/range">範圍查詢</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/costQueryShare/unrecorded">未入帳</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="/costQueryShare/unconfirmed">費用確認</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/costQueryShare/returned">被退回</a>
+    </li>
+  </ul>
+
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th scope="col">日期</th>
+        <th scope="col">類別</th>
+        <th scope="col">金額</th>
+        <th scope="col">修改</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each allPayment}}
+      <tr>
+        <th scope="row" valign="middle">{{moment this.createdAt}}</th>
+        <td valign="middle">{{this.Category.name}}</td>
+        <td valign="middle">{{this.price}}</td>
+        <td valign="middle">
+          {{!-- <button type="button" data-payment="{{this.id}}" id="" data-CSRF="{{../CSRF}}"
+            class="btn btn-lg btn-secondary py-0 px-1">修改</button> --}}
+
+          <button type="button" class="btn btn-lg btn-secondary py-0 px-1" data-bs-toggle="modal"
+            data-bs-target="#costReturn{{this.id}}">
+            修改
+          </button>
+        </td>
+      </tr>
+
+      {{/each}}
+    </tbody>
+  </table>
+
+</div>
+
+{{#each allPayment}}
+<!-- Modal -->
+<div class="modal fade" id="costReturn{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form class="modal-content" action="/costQueryShare/returned" method="POST">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">金額修改</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">請輸入欲修改的金額 :</label>
+            <input type="hidden" name="csrf" value="{{../CSRF}}">
+            <input type="hidden" name="paymentId" value="{{this.id}}">
+            <input type="number" name="modifyCost" class="form-control" required id="recipient-name" value="{{this.price}}">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+{{/each}}
