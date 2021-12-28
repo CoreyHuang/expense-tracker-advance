@@ -10,6 +10,7 @@ const { Model } = require('sequelize/dist')
 const user = require('../models/user')
 const sequelize = require("sequelize")
 const Op = sequelize.Op
+const bcrypt = require('bcrypt')
 
 const costController = {
 
@@ -526,7 +527,22 @@ const costController = {
             res.render('costQueryUnrecorded', { allPayment })
           })
           .catch((err) => { console.log(err) })
-        break;  
+        break;
+
+      case 'unconfirmed':
+        Payment.findAll({
+          raw: true, nest: true,
+          where: { userId: req.user.findShareUser[0].id, isShare: true, isShareCheck: false, shareUserId: req.user.id, isSendBack: false },
+          order: [['createdAt', 'DESC']],
+          include: [Category]
+        })
+          .then((allPayment) => {
+            // d('allPayment', allPayment)
+            res.render('costQueryUnconfirmed', { allPayment, CSRF: bcrypt.hashSync(req.user.name, 10) })
+          })
+          .catch((err) => { console.log(err) })
+
+        break;
 
       default:
         res.redirect('/costQuery', { share })
@@ -619,6 +635,51 @@ const costController = {
         .catch((err) => { console.log(err) })
     }
     return res.render('costQueryRange', { startDate, endDate, share: true })
+  },
+
+
+  postQueryShare: async (req, res) => {
+    const { paymentId, csrf } = req.body
+    const { queryItem } = req.params
+
+    switch (queryItem) {
+
+      case 'unconfirmed':
+        Payment.findByPk(paymentId)
+          .then((payment) => {
+            payment.update({ isShareCheck: true })
+              .then((data) => {
+                // d('data', data)
+                return res.json({ status: '200', result: 'success' })
+              })
+              .catch((err) => { console.log(err) })
+          })
+          .catch((err) => { console.log(err) })
+        break;
+
+      case 'returned':
+        Payment.findByPk(paymentId)
+          .then((payment) => {
+            payment.update({ isSendBack: true })
+              .then((data) => {
+                // d('data', data)
+                return res.json({ status: '200', result: 'success' })
+              })
+              .catch((err) => { console.log(err) })
+          })
+          .catch((err) => { console.log(err) })
+        break;
+
+      default:
+    }
+
+
+    // d('csrf', bcrypt.compareSync(req.user.name, csrf))
+    if (!(await bcrypt.compareSync(req.user.name, csrf)))
+      return res.redirect('/costQueryShare/unconfirmed')
+
+
+
   },
 
 }

@@ -11,7 +11,9 @@ app.engine('handlebars', engine({ helpers: require('./config/handlebars-helper')
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
+app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 app.use(session({ secret: 'corey', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());

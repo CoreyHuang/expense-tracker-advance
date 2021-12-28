@@ -1,0 +1,60 @@
+<div class="row mx-0 justify-content-start">
+
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" href="/costQueryShare">最近</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/costQueryShare/week">每週</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/costQueryShare/month">每月</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="/costQueryShare/range">範圍查詢</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/costQueryShare/unrecorded">未入帳</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/costQueryShare/unconfirmed">費用確認</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="/costQueryShare/returned">被退回</a>
+    </li>
+  </ul>
+
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th scope="col">日期</th>
+        <th scope="col">類別</th>
+        <th scope="col">金額</th>
+        <th scope="col">入帳</th>
+        <th scope="col">退回</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each allPayment}}
+      <tr>
+        <th scope="row" valign="middle">{{moment this.createdAt}}</th>
+        <td valign="middle">{{this.Category.name}}</td>
+        <td valign="middle">{{this.price}}</td>
+        <td valign="middle">
+          {{!-- <form action="" method="post"> --}}
+            {{!-- <input type="hidden" style="display:none" disabled name="userIdForCostConfirm" value="{{#each ../user.findShareUser}}{{this.id}}{{/each}}"> --}}
+            {{!-- <input type="hidden" disabled name="shareUserIdForCostConfirm" value="{{../user.id}}"> --}}
+            <button type="button" data-payment="{{this.id}}" id="costConfirm" data-CSRF="{{../CSRF}}" class="btn btn-lg btn-primary py-0 px-1">入帳</button>
+          {{!-- </form> --}}
+        </td>
+        <td valign="middle">
+          {{!-- <form action="" method="post"> --}}
+            <button type="button" data-payment="{{this.id}}" id="costReturn" data-CSRF="{{../CSRF}}" class="btn btn-lg btn-danger py-0 px-1">退回</button>
+          {{!-- </form> --}}
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+</div>
