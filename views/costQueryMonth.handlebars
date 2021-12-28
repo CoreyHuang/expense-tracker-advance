@@ -1,18 +1,42 @@
 <div class="row mx-0 justify-content-start">
 
   <ul class="nav nav-tabs mb-2">
-    <li class="nav-item">
-      <a class="nav-link" href="/costQuery">最近</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/costQuery/week">每週</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link active" href="/costQuery/month">每月</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link " href="/costQuery/range">範圍查詢</a>
-    </li>
+  {{#if share}}
+  <li class="nav-item">
+    <a class="nav-link" href="/costQueryShare">最近</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/costQueryShare/week">每週</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/costQueryShare/month">每月</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link " href="/costQueryShare/range">範圍查詢</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link " href="/costQueryShare/unrecorded">未入帳</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link " href="/costQueryShare/unconfirmed">費用確認</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link " href="/costQueryShare/returned">被退回</a>
+  </li>
+  {{else}}
+  <li class="nav-item">
+    <a class="nav-link" href="/costQuery">最近</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/costQuery/week">每週</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/costQuery/month">每月</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link " href="/costQuery/range">範圍查詢</a>
+  </li>
+  {{/if}}
   </ul>
 
 

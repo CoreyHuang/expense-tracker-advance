@@ -433,8 +433,9 @@ const costController = {
 
       case 'month':   ////////////////////////////////////////////////////////////////
         Payment.findAll({
-          raw: true, nest: true, where: { isShare: false, userId: req.user.id },
-          include: [{ model: Category }]
+          raw: true, nest: true, 
+          where: { isShare: true, userId: req.user.id, isShareCheck: true, shareUserId: req.user.findShareUser[0].id },
+          include: [{ model: Category }], order: [['createdAt', 'DESC']]
         })
           .then((payments) => {
             const sortResult = []
@@ -501,7 +502,7 @@ const costController = {
             })
             // d('sortResult - MONTH', sortResult)
             // d('sortResult - MONTH', sortResult[0].category)
-            res.render('costQueryMonth', { sortResult })
+            res.render('costQueryMonth', { sortResult, share })
           })
           .catch((err) => { console.log(err) })
         break;
