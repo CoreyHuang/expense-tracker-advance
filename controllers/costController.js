@@ -514,6 +514,20 @@ const costController = {
         res.render('costQueryRange', { share })
         break;
 
+      case 'unrecorded':
+        Payment.findAll({
+          raw: true, nest: true,
+          where: { userId: req.user.id, isShare: true, isShareCheck: false, shareUserId: req.user.findShareUser[0].id },
+          order: [['createdAt', 'DESC']],
+          include: [Category]
+        })
+          .then((allPayment) => {
+            // d('allPayment', allPayment)
+            res.render('costQueryUnrecorded', { allPayment })
+          })
+          .catch((err) => { console.log(err) })
+        break;  
+
       default:
         res.redirect('/costQuery', { share })
         break;
