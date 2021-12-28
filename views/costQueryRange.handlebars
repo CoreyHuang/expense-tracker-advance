@@ -1,11 +1,34 @@
 <div class="row mx-0 justify-content-start">
 
   <ul class="nav nav-tabs">
+    {{#if share}}
+    <li class="nav-item">
+      <a class="nav-link" href="/costQueryShare">最近</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/costQueryShare/week">每週</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/costQueryShare/month">每月</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/costQueryShare/range">範圍查詢</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="/costQueryShare/unrecorded">未入帳</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="/costQueryShare/unconfirmed">費用確認</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="/costQueryShare/returned">被退回</a>
+    </li>
+    {{else}}
     <li class="nav-item">
       <a class="nav-link" href="/costQuery">最近</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link " href="/costQuery/week">每週</a>
+      <a class="nav-link" href="/costQuery/week">每週</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="/costQuery/month">每月</a>
@@ -13,19 +36,20 @@
     <li class="nav-item">
       <a class="nav-link active" href="/costQuery/range">範圍查詢</a>
     </li>
+    {{/if}}
   </ul>
 
-  <form class="row justify-content-center m-0" action="/costQuery/range/range" method="get" style="width: 100%;">
+  <form class="row justify-content-center m-0" {{#if share}}action="/costQueryShare/range/range"
+    {{else}}action="/costQuery/range/range" {{/if}} method="get" style="width: 100%;">
 
     <div class="form-label-group mt-5 align-self-center">
       <label for="startDate">起始日期 : </label>
-      <input id="startDate" type="date" name="startDate" class="form-control mt-2"
-        required autofocus value="{{startDate}}">
+      <input id="startDate" type="date" name="startDate" class="form-control mt-2" required autofocus
+        value="{{startDate}}">
     </div>
     <div class="form-label-group mt-3 align-self-center">
       <label for="endDate">結算日期 : </label>
-      <input id="endDate" type="date" name="endDate" class="form-control mt-2"
-        required value="{{endDate}}">
+      <input id="endDate" type="date" name="endDate" class="form-control mt-2" required value="{{endDate}}">
     </div>
     <br />
     <button class="btn btn-lg btn-primary btn-block col-6 mt-5" type="submit">查詢</button>

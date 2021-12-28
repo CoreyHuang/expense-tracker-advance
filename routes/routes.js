@@ -35,6 +35,7 @@ router.get('/costQuery/:queryItem/range', costController.getCostQueryForSearch)
 
 router.get('/costQueryShare', costController.getCostQuerySharePage)
 router.get('/costQueryShare/:queryItem', costController.getQueryShareRange)
+router.get('/costQueryShare/:queryItem/range', costController.getQueryShareForSearch)
 
 router.get('/logout', userController.logout)
 
