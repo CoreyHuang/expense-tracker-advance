@@ -1,6 +1,29 @@
 <div class="row mx-0 justify-content-start">
 
   <ul class="nav nav-tabs mb-2">
+    {{#if share}}
+    <li class="nav-item">
+      <a class="nav-link" href="/costQueryShare">最近</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/costQueryShare/week">每週</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/costQueryShare/month">每月</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="/costQueryShare/range">範圍查詢</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="/costQueryShare/unrecorded">未入帳</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="/costQueryShare/unconfirmed">費用確認</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="/costQueryShare/returned">被退回</a>
+    </li>
+    {{else}}
     <li class="nav-item">
       <a class="nav-link" href="/costQuery">最近</a>
     </li>
@@ -13,9 +36,10 @@
     <li class="nav-item">
       <a class="nav-link " href="/costQuery/range">範圍查詢</a>
     </li>
+    {{/if}}
   </ul>
 
- 
+
   <table class="table table-striped mt-0 mb-1">
     <thead>
       <tr>
@@ -27,21 +51,21 @@
         <th scope="col">Top-5</th>
       </tr>
     </thead>
-  
+
     <tbody>
-    {{#each sortResult}}
+      {{#each sortResult}}
       <tr>
         <td scope="row" class="p-0" colspan=6>{{moment this.startDate}} ~ {{moment this.endDate}}</td>
       </tr>
       <tr>
         <td valign="middle">{{this.price}}</td>
-      {{#each this.category}}
+        {{#each this.category}}
         <td>{{this.name}}: {{this.price}}<br>({{this.percentage}}%)</td>
-      {{/each}}
+        {{/each}}
       </tr>
-    {{/each}}
+      {{/each}}
     </tbody>
- 
+
   </table>
-  
+
 </div>
