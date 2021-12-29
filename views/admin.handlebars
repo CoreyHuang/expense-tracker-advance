@@ -1,0 +1,24 @@
+<table class="table table-striped mt-0 mb-1">
+  <thead>
+    <tr>
+      <th scope="col">帳號</th>
+      <th scope="col">使用次數</th>
+      <th scope="col">花費總額</th>
+      <th scope="col">上次登入IP</th>
+      <th scope="col">狀態</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {{#each users}}
+    <tr>
+      <td valign="middle">{{this.name}}</td>
+      <td valign="middle">{{this.useTimes}}</td>
+      <td valign="middle">暫無</td>
+      <td valign="middle">{{this.lastIp}}</td>
+      <td valign="middle">{{#if this.isLocked}}鎖定{{else}}未鎖定{{/if}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+
+</table>

@@ -101,7 +101,7 @@ const userController = {
           await User.findOne({ where: { [Op.or]: [{ name: inputShare }, { email: inputShare }] } })
             .then((user) => {
               if (!user || req.user.id === user.toJSON().id) return console.log('無此人')
-              return ShareUser.create({ userId: req.user.id, shareUserId: user.toJSON().id})
+              return ShareUser.create({ userId: req.user.id, shareUserId: user.toJSON().id })
                 .then(() => { console.log("create new shareId") })
                 .catch((err) => { console.log(err) })
             })
@@ -113,6 +113,18 @@ const userController = {
       .catch((err) => { console.log(err) })
   },
 
+  getAdminPage: (req, res) => {
+    // const { name, useTimes, lastIp, isLocked } = req.user
+    User.findAll({
+      raw: true, nest: true,
+      where: { isAdmin: false }, order: [['createdAt', 'DESC']]
+    })
+      .then((users) => {
+        d('users', users)
+        res.render('admin', { users })
+      })
+      .catch((err) => { console.log(err) })
+  },
 
 }
 

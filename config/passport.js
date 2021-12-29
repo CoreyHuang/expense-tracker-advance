@@ -19,7 +19,18 @@ passport.use(
           if (!result) {
             return cb(null, false);
           }
-          return cb(null, user);
+
+          const ip = (req.headers["x-forwarded-for"] || "").split(",").pop() ||
+            req.connection.remoteAddress ||
+            req.socket.remoteAddress ||
+            req.connection.socket.remoteAddress;
+
+          user.update({ lastIp: ip })
+            .then((data) => {
+              return cb(null, user)
+            })
+            .catch(err => cb(null, false))
+
         })
         .catch(err => console.log(err))
     },
@@ -31,11 +42,11 @@ passport.serializeUser((user, cb) => {
 });
 
 passport.deserializeUser((id, cb) => {
-  User.findByPk(id, { include: [{ model: User, as: 'findShareUser'}]})
-  .then((user) => {
-    return cb(null, user.toJSON())
-  })
-  .catch (err => console.log(err))
+  User.findByPk(id, { include: [{ model: User, as: 'findShareUser' }] })
+    .then((user) => {
+      return cb(null, user.toJSON())
+    })
+    .catch(err => console.log(err))
 });
 
 module.exports = passport;

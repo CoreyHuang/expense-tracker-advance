@@ -8,7 +8,7 @@ const passport = require('passport')
 
 
 const userAuthenticated = (req, res, next) => {
-  if (!req.isAuthenticated())  return res.redirect('/signIn')
+  if (!req.isAuthenticated()) return res.redirect('/signIn')
   return next()
 }
 // router.get('/', userController.test)
@@ -17,14 +17,17 @@ const userAuthenticated = (req, res, next) => {
     最後要加上user 驗證
 ************************ */
 
+// 管理者進入點
 router.post('/signIn', passport.authenticate('local', { failureRedirect: '/signIn' }),
   function (req, res) {
-    res.redirect('/costInput');
+    if (!req.user.isAdmin)
+      return res.redirect('/costInput');
+    return res.redirect('/admin')
   })
 router.get('/signIn', userController.getSignInPage)
 router.get('/signUp', userController.getSignUpPage)
 router.post('/signUp', userController.signUp)
-router.get('/costInput',costController.getCostInputPage)
+router.get('/costInput', costController.getCostInputPage)
 router.post('/costInput', costController.postCost)
 router.get('/costInput/category', costController.getNewCategoryPage)
 router.post('/costInput/category', costController.postNewCategory)
@@ -41,6 +44,8 @@ router.get('/logout', userController.logout)
 
 router.get('/users/setting', userController.getSettingPage)
 router.post('/users/setting', userController.postSetting)
+
+router.get('/admin', userController.getAdminPage)
 
 router.get('*', userController.getSignInPage)
 module.exports = router
