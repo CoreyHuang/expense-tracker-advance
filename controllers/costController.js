@@ -94,7 +94,7 @@ const costController = {
       case 'week':
         Payment.findAll({
           raw: true, nest: true, where: { isShare: false, userId: req.user.id },
-          include: [{ model: Category }]
+          include: [{ model: Category }], order: [['createdAt', 'DESC']]
         })
           .then((payments) => {
             const sortResult = []
@@ -168,7 +168,7 @@ const costController = {
       case 'month':   ////////////////////////////////////////////////////////////////
         Payment.findAll({
           raw: true, nest: true, where: { isShare: false, userId: req.user.id },
-          include: [{ model: Category }]
+          include: [{ model: Category }], order: [['createdAt', 'DESC']]
         })
           .then((payments) => {
             const sortResult = []
@@ -690,7 +690,7 @@ const costController = {
     }
   },
 
-  
+
 
 }
 
