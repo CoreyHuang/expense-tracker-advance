@@ -1,6 +1,7 @@
 'use strict';
 
 const bcrypt = require('bcrypt')
+const moment = require('moment')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -60,14 +61,17 @@ module.exports = {
 
     const paymentData = []
     const getPaymentArray = userIds.map(user => {
-      return Array.from({ length: 20 }).map((_, i) => i + 1).map(i => {
+      return Array.from({ length: 250 }).map((_, i) => i + 1).map(i => {
         return {
           userId: user,
           price: Math.floor(Math.random() * 1000 + 1),
-          categoryId: Math.floor(Math.random() * 5),
+          categoryId: Math.floor(Math.random() * 5 + 1),
           shareUserId: Math.floor(Math.random() * 3),
-          isShare: Math.floor(Math.random() * 2) ? true : false,
-          createdAt: new Date(), updatedAt: new Date()
+          isShare: Math.floor(Math.random() + Math.random()) ? true : false,
+          isShareCheck: Math.floor(Math.random() + Math.random()) ? true : false,
+          isSendBack: Math.floor(Math.random() + Math.random()) ? true : false,
+          createdAt: moment(Math.floor(moment(new Date()).valueOf() * ((Math.random() * 0.03) + 0.97))).format('YYYY-MM-DD'),
+          updatedAt: new Date()
         }
       })
     })
