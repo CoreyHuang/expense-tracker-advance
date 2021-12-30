@@ -341,7 +341,13 @@ const costController = {
     const share = true
     Payment.findAll({
       raw: true, nest: true,
-      where: { userId: req.user.id, isShare: true, isShareCheck: true, shareUserId: req.user.findShareUser[0].id },
+      where: { 
+        [Op.or]: [{
+          userId: req.user.id, isShare: true, isShareCheck: true, shareUserId: req.user.findShareUser[0].id
+        },{
+          userId: req.user.findShareUser[0].id, isShare: true, isShareCheck: true, shareUserId: req.user.id 
+        }]
+         },
       limit: 20, order: [['createdAt', 'DESC']],
       include: [Category]
     })
@@ -361,8 +367,12 @@ const costController = {
         Payment.findAll({
           raw: true, nest: true,
           where: {
-            isShare: true, userId: req.user.id,
-            isShareCheck: true, shareUserId: req.user.findShareUser[0].id
+            [Op.or]: [{
+              isShare: true, userId: req.user.id,
+              isShareCheck: true, shareUserId: req.user.findShareUser[0].id
+            }, {
+              isShare: true, userId: req.user.findShareUser[0].id,
+              isShareCheck: true, shareUserId: req.user.id}]
           },
           include: [{ model: Category }], order: [['createdAt', 'DESC']]
         })
@@ -438,7 +448,13 @@ const costController = {
       case 'month':   ////////////////////////////////////////////////////////////////
         Payment.findAll({
           raw: true, nest: true,
-          where: { isShare: true, userId: req.user.id, isShareCheck: true, shareUserId: req.user.findShareUser[0].id },
+          where: { 
+            [Op.or]: [{
+              isShare: true, userId: req.user.id, isShareCheck: true, shareUserId: req.user.findShareUser[0].id
+            },{
+              isShare: true, userId: req.user.findShareUser[0].id, isShareCheck: true, shareUserId: req.user.id 
+            }]
+             },
           include: [{ model: Category }], order: [['createdAt', 'DESC']]
         })
           .then((payments) => {
@@ -571,9 +587,15 @@ const costController = {
       return Payment.findAll({
         raw: true, nest: true,
         where: {
-          userId: req.user.id, isShare: true,
-          isShareCheck: true, shareUserId: req.user.findShareUser[0].id,
-          createdAt: { [Op.between]: [startDate, endDate] }
+          [Op.or]: [{
+            userId: req.user.id, isShare: true,
+            isShareCheck: true, shareUserId: req.user.findShareUser[0].id,
+            createdAt: { [Op.between]: [startDate, endDate] }
+          },{
+            userId: req.user.findShareUser[0].id, isShare: true,
+            isShareCheck: true, shareUserId: req.user.id,
+            createdAt: { [Op.between]: [startDate, endDate] }
+          }]
         },
         include: [Category], order: [['createdAt', 'DESC']]
       })
