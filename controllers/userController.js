@@ -7,6 +7,7 @@ const Payment = db.Payment
 const d = require('../components/debug')
 const bcrypt = require('bcrypt')
 const { Op } = require('sequelize')
+const category = require('../models/category')
 
 const userController = {
 
@@ -42,8 +43,10 @@ const userController = {
           password: bcrypt.hashSync(password, 10)
         })
           .then((user) => {
-            d('user', user)
-            return res.redirect('signin')
+            // d('user', user)
+            OwnCategory.bulkCreate(Array.from({ length: 5 }).map((_, i) => { return { userId: user.id, categoryId: i + 1 } }))
+              .then(() => { return res.redirect('signin') })
+              .catch((err) => { console.log(err) })
           })
           .catch((err) => { console.log(err) })
       })
