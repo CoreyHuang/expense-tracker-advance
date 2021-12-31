@@ -339,6 +339,7 @@ const costController = {
 
   getCostQuerySharePage: (req, res) => {
     const share = true
+    if (!req.user.findShareUser[0]) return res.render('costQuery', {share})
     Payment.findAll({
       raw: true, nest: true,
       where: { 
@@ -364,6 +365,7 @@ const costController = {
     switch (queryItem) {
 
       case 'week':
+        if (!req.user.findShareUser[0]) return res.render('costQueryWeek', { share })
         Payment.findAll({
           raw: true, nest: true,
           where: {
@@ -446,6 +448,7 @@ const costController = {
         break;
 
       case 'month':   ////////////////////////////////////////////////////////////////
+        if (!req.user.findShareUser[0]) return res.render('costQueryMonth', { share })
         Payment.findAll({
           raw: true, nest: true,
           where: { 
@@ -532,6 +535,7 @@ const costController = {
         break;
 
       case 'unrecorded':
+        if (!req.user.findShareUser[0]) return res.render('costQueryUnrecorded', { share })
         Payment.findAll({
           raw: true, nest: true,
           where: { userId: req.user.id, isShare: true, isShareCheck: false, shareUserId: req.user.findShareUser[0].id },
@@ -546,6 +550,7 @@ const costController = {
         break;
 
       case 'unconfirmed':
+        if (!req.user.findShareUser[0]) return res.render('costQueryUnconfirmed', { share })
         Payment.findAll({
           raw: true, nest: true,
           where: { userId: req.user.findShareUser[0].id, isShare: true, isShareCheck: false, shareUserId: req.user.id, isSendBack: false },
@@ -560,6 +565,7 @@ const costController = {
         break;
 
       case 'returned':
+        if (!req.user.findShareUser[0]) return res.render('costQueryReturn', { share })
         Payment.findAll({
           raw: true, nest: true,
           where: { userId: req.user.id, isShare: true, isShareCheck: false, shareUserId: req.user.findShareUser[0].id, isSendBack: true },
@@ -580,6 +586,7 @@ const costController = {
   },
   // 與 getCostQueryForSear 高度重合
   getQueryShareForSearch: (req, res) => {
+    if (!req.user.findShareUser[0]) return res.render('costQueryRange', { share: true })
     const { queryItem } = req.params
     const { startDate, endDate } = req.query
     const compareDate = moment(startDate).valueOf() < moment(endDate).valueOf()
