@@ -3,44 +3,34 @@
 
 export default (function () {
 
-  const costConfirm = document.querySelector('#costConfirm')
-  const costReturn = document.querySelector('#costReturn')
+  const confirmPage = document.querySelector('#confirmPage')
+  if (confirmPage) {
+    confirmPage.addEventListener('click', (e) => {
+      let route = ""
+      if (e.target.id === "costConfirm") {
+        route = "unconfirmed"
+        clickButton(e, route)
+      } else if (e.target.id === "costReturn") {
+        route = "returned"
+        clickButton(e, route)
+      }
 
-  if (costConfirm)
-  costConfirm.addEventListener('click', clickCostConfirm)
-
-  if (costReturn)
-  costReturn.addEventListener('click', clickCostReturn)
-
-
-  function clickCostConfirm (e) {
-      const csrf = e.target.dataset.csrf
-      const paymentId = e.target.dataset.payment
-      //console.log('click addEventListener')
-      axios.post(`./unconfirmed`, { paymentId, csrf })
-        .then(data => {
-          const { status, result } = data.data
-          if (status === '200' & result === 'success') {
-            costConfirm.removeEventListener('click', clickCostConfirm)
-            costReturn.removeEventListener('click', clickCostReturn)
-            costReturn.setAttribute('disabled', '')
-          }
-          else console.log('save error')
-        })
-        .catch(err => console.log(err))
+    })
   }
 
-  function clickCostReturn (e) {
+  function clickButton (e, route) {
     const csrf = e.target.dataset.csrf
     const paymentId = e.target.dataset.payment
-    console.log('click addEventListener')
-    axios.post(`./returned`, { paymentId, csrf })
+    axios.post(`./${route}`, { paymentId, csrf })
       .then(data => {
         const { status, result } = data.data
         if (status === '200' & result === 'success') {
-          costConfirm.removeEventListener('click', clickCostConfirm)
-          costReturn.removeEventListener('click', clickCostReturn)
-          costConfirm.setAttribute('disabled', '')
+          e.target.id = null
+          e.target.dataset.payment = null
+          e.target.setAttribute('disabled', '')
+          const payment = document.querySelector(`[data-payment = "${paymentId}"]`)
+          payment.dataset.payment = null
+          payment.id = null
         }
         else console.log('save error')
       })

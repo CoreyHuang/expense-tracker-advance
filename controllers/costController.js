@@ -687,7 +687,7 @@ const costController = {
           .then((payment) => {
             payment.update({ isShareCheck: true })
               .then((data) => {
-                // d('data', data)
+                d('data 123', data)
                 return res.json({ status: '200', result: 'success' })
               })
               .catch((err) => { console.log(err) })
@@ -698,6 +698,21 @@ const costController = {
       case 'returned':
         Payment.findByPk(paymentId)
           .then((payment) => {
+            // d('payment', payment)
+            payment.update({ isSendBack: true })
+              .then((data) => {
+                // d('data', data)
+                return res.json({ status: '200', result: 'success' })
+              })
+              .catch((err) => { console.log(err) })
+          })
+          .catch((err) => { console.log(err) })
+        break;
+
+      case 'returnModify':
+        Payment.findByPk(paymentId)
+          .then((payment) => {
+            // d('payment', payment)
             payment.update({ price: modifyCost, isSendBack: false })
               .then((data) => {
                 // d('data', data)
