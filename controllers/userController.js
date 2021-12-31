@@ -34,7 +34,7 @@ const userController = {
     if (account.length > 30 || email.length > 30 || password.length > 30)
       return res.redirect('back')
 
-    User.findOne({ where: { [Op.or]: [{ name: account }, { email }] } })
+    User.findOne({ where: { name: account } })
       .then((user) => {
         if (user) return res.redirect('signin')
         User.create({
