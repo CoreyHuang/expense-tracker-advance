@@ -41,13 +41,14 @@ const costController = {
   },
 
   postCost: (req, res) => {
-    d('test', req.body)
+    // d('req.body', req.body)
+    // d('req.user', req.user)
     const { Date, category, inputPrice, shareCheck } = req.body
     Payment.create({
       categoryId: category,
       price: inputPrice,
       userId: req.user.id,
-      shareUserId: req.user.shareUser,
+      shareUserId: req.user.findShareUser[0].id,
       isShare: shareCheck ? true : false,
       createdAt: Date
     })
