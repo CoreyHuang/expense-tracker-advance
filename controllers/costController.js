@@ -24,7 +24,7 @@ const costController = {
         category.toJSON().ownCategory.forEach(d => {
           return categories.push({ name: d.name, id: d.id })
         });
-        res.render('costInput', { categories })
+        res.render('costInput', { categories, shareUser: req.user.findShareUser[0] })
       })
       .catch((err) => { console.log(err) })
 
@@ -339,16 +339,16 @@ const costController = {
 
   getCostQuerySharePage: (req, res) => {
     const share = true
-    if (!req.user.findShareUser[0]) return res.render('costQuery', {share})
+    if (!req.user.findShareUser[0]) return res.render('costQuery', { share })
     Payment.findAll({
       raw: true, nest: true,
-      where: { 
+      where: {
         [Op.or]: [{
           userId: req.user.id, isShare: true, isShareCheck: true, shareUserId: req.user.findShareUser[0].id
-        },{
-          userId: req.user.findShareUser[0].id, isShare: true, isShareCheck: true, shareUserId: req.user.id 
+        }, {
+          userId: req.user.findShareUser[0].id, isShare: true, isShareCheck: true, shareUserId: req.user.id
         }]
-         },
+      },
       limit: 20, order: [['createdAt', 'DESC']],
       include: [Category]
     })
@@ -374,7 +374,8 @@ const costController = {
               isShareCheck: true, shareUserId: req.user.findShareUser[0].id
             }, {
               isShare: true, userId: req.user.findShareUser[0].id,
-              isShareCheck: true, shareUserId: req.user.id}]
+              isShareCheck: true, shareUserId: req.user.id
+            }]
           },
           include: [{ model: Category }], order: [['createdAt', 'DESC']]
         })
@@ -451,13 +452,13 @@ const costController = {
         if (!req.user.findShareUser[0]) return res.render('costQueryMonth', { share })
         Payment.findAll({
           raw: true, nest: true,
-          where: { 
+          where: {
             [Op.or]: [{
               isShare: true, userId: req.user.id, isShareCheck: true, shareUserId: req.user.findShareUser[0].id
-            },{
-              isShare: true, userId: req.user.findShareUser[0].id, isShareCheck: true, shareUserId: req.user.id 
+            }, {
+              isShare: true, userId: req.user.findShareUser[0].id, isShareCheck: true, shareUserId: req.user.id
             }]
-             },
+          },
           include: [{ model: Category }], order: [['createdAt', 'DESC']]
         })
           .then((payments) => {
@@ -598,7 +599,7 @@ const costController = {
             userId: req.user.id, isShare: true,
             isShareCheck: true, shareUserId: req.user.findShareUser[0].id,
             createdAt: { [Op.between]: [startDate, endDate] }
-          },{
+          }, {
             userId: req.user.findShareUser[0].id, isShare: true,
             isShareCheck: true, shareUserId: req.user.id,
             createdAt: { [Op.between]: [startDate, endDate] }
