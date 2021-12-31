@@ -103,10 +103,19 @@ const userController = {
         } else if (inputShare && !shareUser) {  //無存在 share user
           await User.findOne({ where: { [Op.or]: [{ name: inputShare }, { email: inputShare }] } })
             .then((user) => {
-              if (!user || req.user.id === user.toJSON().id) return console.log('無此人')
+              if (!user || req.user.id === user.toJSON().id) {
+                return console.log('無此人')
+              }
               return ShareUser.create({ userId: req.user.id, shareUserId: user.toJSON().id })
                 .then(() => { console.log("create new shareId") })
                 .catch((err) => { console.log(err) })
+            })
+            .catch((err) => { console.log(err) })
+        } else if (!inputShare) {
+          return ShareUser.findOne({ where: { userId: req.user.id } })
+            .then((shareUser) => { 
+              d("delete shareId") 
+              if (shareUser) shareUser.destroy()
             })
             .catch((err) => { console.log(err) })
         }

@@ -16,15 +16,25 @@ const costController = {
 
   getCostInputPage: (req, res) => {
     User.findByPk(req.user.id, {
-      include: [{ model: Category, as: 'ownCategory' }]
+      include: [{ model: Category, as: 'ownCategory' },
+      { model: User, as: 'findShareUser' }]
     })
       .then((category) => {
-        d('category', category.toJSON())
+        const shareUser = category.toJSON().findShareUser[0]
+        let hasShareUser = false
         const categories = []
         category.toJSON().ownCategory.forEach(d => {
           return categories.push({ name: d.name, id: d.id })
         });
-        res.render('costInput', { categories, shareUser: req.user.findShareUser[0] })
+        if (shareUser) {
+          return ShareUser.findOne({ where: { userId: shareUser.id, shareUserId: req.user.id } })
+            .then((data) => {
+              if (data) hasShareUser = true
+              res.render('costInput', { categories, hasShareUser })
+            })
+            .catch((err) => console.log(err))
+        }
+        return res.render('costInput', { categories, hasShareUser })
       })
       .catch((err) => { console.log(err) })
 
