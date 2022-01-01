@@ -13,11 +13,11 @@ passport.use(
         .then(async (user) => {
           if (!user) {
             console.log("can't find user")
-            return cb(null, false);
+            return cb(null, false, req.flash('errorMessage', "無此使用者"));
           }
           result = await bcrypt.compareSync(password, user.password)
           if (!result) {
-            return cb(null, false);
+            return cb(null, false, req.flash('errorMessage', "密碼錯誤"));
           }
 
           const ip = (req.headers["x-forwarded-for"] || "").split(",").pop() ||
@@ -27,10 +27,9 @@ passport.use(
 
           user.update({ lastIp: ip })
             .then((data) => {
-              return cb(null, user)
+              return cb(null, user, req.flash('successMessage', "成功登入"))
             })
             .catch(err => cb(null, false))
-
         })
         .catch(err => console.log(err))
     },

@@ -28,6 +28,8 @@ app.use((req, res, next) => {
   res.locals.user = req.user
   res.locals.signInInput = req.flash('signInInput')[0]
   res.locals.signUpInput = req.flash('signUpInput')[0]
+  res.locals.successMessage = req.flash('successMessage')
+  res.locals.errorMessage = req.flash('errorMessage')
 
   next()
 })

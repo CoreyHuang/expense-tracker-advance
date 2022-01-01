@@ -1,14 +1,17 @@
 <form class="row mx-0 justify-content-center" action="/signup" method="POST" style="width: 100%;">
+  {{> message}}
   <div class="text-center mb-4">
     <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
   </div>
   <div class="form-label-group">
     <label for="inputAccount">Account</label>
-    <input id="inputAccount" type="text" name="account" class="form-control" placeholder="Account" required autofocus value="{{signUpInput.account}}">
+    <input id="inputAccount" type="text" name="account" class="form-control" placeholder="Account" required autofocus
+      value="{{signUpInput.account}}">
   </div>
   <div class="form-label-group mt-2">
     <label for="inputEmail">Email(非必填)</label>
-    <input id="inputEmail" type="email" name="email" class="form-control" placeholder="Email" value="{{signUpInput.email}}">
+    <input id="inputEmail" type="email" name="email" class="form-control" placeholder="Email"
+      value="{{signUpInput.email}}">
   </div>
   <div class="form-label-group mt-2">
     <label for="inputPassword">Password</label>
@@ -16,7 +19,8 @@
   </div>
   <div class="form-label-group mt-2">
     <label for="inputPasswordCheck">Password Check</label>
-    <input id="inputPasswordCheck" type="password" name="passwordCheck" class="form-control" placeholder="Password Check" required>
+    <input id="inputPasswordCheck" type="password" name="passwordCheck" class="form-control"
+      placeholder="Password Check" required>
   </div>
   <br />
   <button class="btn btn-lg btn-primary btn-block mt-3 col-6" type="submit">註冊</button>

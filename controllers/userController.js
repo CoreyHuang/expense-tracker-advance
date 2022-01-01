@@ -45,7 +45,10 @@ const userController = {
           .then((user) => {
             // d('user', user)
             OwnCategory.bulkCreate(Array.from({ length: 5 }).map((_, i) => { return { userId: user.id, categoryId: i + 1 } }))
-              .then(() => { return res.redirect('/signIn') })
+              .then(() => { 
+                req.flash('successMessage', '已成功註冊')
+                return res.redirect('/signIn')
+               })
               .catch((err) => { console.log(err) })
           })
           .catch((err) => { console.log(err) })
@@ -82,7 +85,10 @@ const userController = {
         //修改自身email
         if (user.dataValues.email !== inputEmail) {
           await user.update({ email: inputEmail })
-            .then(() => console.log('email修改成功'))
+            .then(() => {
+              console.log('email修改成功')
+              return req.flash('successMessage', '已成功修改')
+            })
             .catch((err) => { console.log(err) })
         }
         //share account/email 增或改
@@ -95,7 +101,10 @@ const userController = {
               .then((user) => {
                 if (!user || req.user.id === user.toJSON().id) return console.log('無此人')
                 return ShareUser.update({ shareUserId: user.toJSON().id }, { where: { userId: req.user.id } })
-                  .then(() => { console.log("update new shareId") })
+                  .then(() => { 
+                    console.log("update new shareId")
+                    return req.flash('successMessage', '已成功修改')
+                   })
                   .catch((err) => { console.log(err) })
               })
               .catch((err) => { console.log(err) })
@@ -107,7 +116,10 @@ const userController = {
                 return console.log('無此人')
               }
               return ShareUser.create({ userId: req.user.id, shareUserId: user.toJSON().id })
-                .then(() => { console.log("create new shareId") })
+                .then(() => {
+                   console.log("create new shareId")
+                  return req.flash('successMessage', '已成功新增')
+                   })
                 .catch((err) => { console.log(err) })
             })
             .catch((err) => { console.log(err) })
@@ -115,6 +127,7 @@ const userController = {
           return ShareUser.findOne({ where: { userId: req.user.id } })
             .then((shareUser) => { 
               d("delete shareId") 
+              req.flash('successMessage', '已成功刪除')
               if (shareUser) shareUser.destroy()
             })
             .catch((err) => { console.log(err) })

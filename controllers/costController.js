@@ -52,7 +52,10 @@ const costController = {
       isShare: shareCheck ? true : false,
       createdAt: Date
     })
-      .then((data) => res.redirect('/costInput'))
+      .then((data) => {
+        req.flash('successMessage', '已成功新增')
+        return res.redirect('/costInput')
+      })
       .catch((err) => { console.log(err) })
   },
 
@@ -83,12 +86,16 @@ const costController = {
       .then((user) => {
         if (user.toJSON().ownCategory.find((category) => category.name === inputCategory.trim())) {
           d('類別含重複名稱')
+          req.flash('errorMessage', '類別名稱重複')
           return res.redirect('/costInput/category')
         }
         Category.create({ name: inputCategory.trim() })
           .then((category) => {
             OwnCategory.create({ userId: req.user.id, categoryId: category.id })
-              .then(() => res.redirect('/costInput'))
+              .then(() => {
+                req.flash('successMessage', '已成功新增')
+                return res.redirect('/costInput')
+              })
               .catch((err) => { console.log(err) })
           })
           .catch((err) => { console.log(err) })

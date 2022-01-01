@@ -10,13 +10,13 @@
       <input id="inputDate" type="date" name="Date" class="col-10 p-2" style="" value="{{moment}}">
     </div>
   </div>
-
+  {{> message}}
   <div class="form-label-group mt-3 align-self-center">
     <label for="">類別</label>
     <div class="row justify-content-center m-0 mt-2" style="max-height: 42px;">
       <select id="category" class="col-7" name="category">
         {{#each categories}}
-          <option value="{{this.id}}">{{this.name}}</option>
+        <option value="{{this.id}}">{{this.name}}</option>
         {{/each}}
       </select>
       <a href="/costInput/category" class="col-3 row m-0 justify-content-center" style="margin-left:0px;">
@@ -37,8 +37,8 @@
 
   <div class="form-label-group mt-3 align-self-center row justify-content-center align-content-center">
     <div class="p-2 text-center col-4 align-self-center row align-content-center justify-content-center">
-      <input id="shareCheck" type="checkbox" name="shareCheck" class="col-sm-6 col-xs-12 align-self-center" {{#if hasShareUser}}{{else}}disabled{{/if}}
-        style="width:30px;height:30px;align-items: center;">
+      <input id="shareCheck" type="checkbox" name="shareCheck" class="col-sm-6 col-xs-12 align-self-center" {{#if
+        hasShareUser}}{{else}}disabled{{/if}} style="width:30px;height:30px;align-items: center;">
       <p class="col-sm-6 col-xs-12 align-self-center mb-0">Share</p>
     </div>
 

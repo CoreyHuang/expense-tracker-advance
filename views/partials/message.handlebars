@@ -1,0 +1,13 @@
+{{#if errorMessage}}
+<div class="alert alert-danger text-center useOpacity" style="position:absolute;z-index:9999;max-width: 80%;"
+  role="alert">
+  {{errorMessage}}
+</div>
+{{/if}}
+
+{{#if successMessage}}
+<div class="alert alert-success text-center useOpacity" style="position:absolute;z-index:9999;max-width: 80%;"
+  role="alert">
+  {{successMessage}}
+</div>
+{{/if}}
