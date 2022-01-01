@@ -19,7 +19,7 @@ const userController = {
   },
 
   getSignInPage: (req, res) => {
-    return res.render('signIn')
+    return res.render('signin')
   },
 
   getSignUpPage: (req, res) => {
@@ -37,7 +37,7 @@ const userController = {
 
     User.findOne({ where: { name: account } })
       .then((user) => {
-        if (user) return res.redirect('signin')
+        if (user) return res.redirect('/signIn')
         User.create({
           name: account, email,
           password: bcrypt.hashSync(password, 10)
@@ -45,7 +45,7 @@ const userController = {
           .then((user) => {
             // d('user', user)
             OwnCategory.bulkCreate(Array.from({ length: 5 }).map((_, i) => { return { userId: user.id, categoryId: i + 1 } }))
-              .then(() => { return res.redirect('signin') })
+              .then(() => { return res.redirect('/signIn') })
               .catch((err) => { console.log(err) })
           })
           .catch((err) => { console.log(err) })
@@ -121,19 +121,6 @@ const userController = {
         }
 
         res.redirect('/users/setting')
-      })
-      .catch((err) => { console.log(err) })
-  },
-
-  getAdminPage: (req, res) => {
-    // const { name, useTimes, lastIp, isLocked } = req.user
-    User.findAll({
-      raw: true, nest: true,
-      where: { isAdmin: false }, order: [['createdAt', 'DESC']]
-    })
-      .then((users) => {
-        d('users', users)
-        res.render('admin', { users })
       })
       .catch((err) => { console.log(err) })
   },

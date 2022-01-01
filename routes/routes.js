@@ -44,7 +44,7 @@ router.get('/logout', userAuthenticated, userController.logout)
 router.get('/users/setting', userAuthenticated, userController.getSettingPage)
 router.post('/users/setting', userAuthenticated, userController.postSetting)
 
-router.get('/admin', adminAuthenticated, userController.getAdminPage)
+router.get('/admin', adminAuthenticated, adminController.getAdminPage)
 
 router.get('*', userController.getSignInPage)
 module.exports = router
