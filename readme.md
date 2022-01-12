@@ -2,8 +2,8 @@
 ### 一個統計與分析金錢花費的網站，可以快速進行金額輸入、一般只要手動輸入金額，其他的皆可使用選取的方式輸入，當想分析或計算所花費的金額時，可依據週/月或自訂範圍來顯示目前的金額花費比例等等資訊。
 ### 除了單人編輯外，也可以與人共同編輯花費，而且每筆金額都需要雙方同意後才可以進行金額的登入，如輸入金額錯誤可以退回並告知對方進行修改，最終仍可進行不同日期花費的分析。
 
-### 使用者介面([image](https://github.com/CoreyHuang/twitter-fullstack/blob/f/addReadme/twitter-wireframe.png))
-
+### 使用者介面([image](https://raw.githubusercontent.com/CoreyHuang/expense-tracker-advance/d27357afd2b463f438562e1fe4915f26508bcde7/expense-tracker.png))
+![image](https://raw.githubusercontent.com/CoreyHuang/expense-tracker-advance/d27357afd2b463f438562e1fe4915f26508bcde7/expense-tracker.png)
 ---
 
 ### installation and execution(安裝與執行步驟):
