@@ -87,3 +87,5 @@ typings/
 .dynamodb/
 
 temp/
+
+/CA

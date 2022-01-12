@@ -5,6 +5,9 @@ const app = express()
 const passport = require('./config/passport')
 const flash = require('connect-flash')
 const d = require('./components/debug')
+const https = require('https')
+const fs = require('fs')
+const options = {}
 
 app.engine('handlebars', engine({ helpers: require('./config/handlebars-helper') }));
 app.set('view engine', 'handlebars');
@@ -15,6 +18,11 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const port = process.env.PORT || 3000
 const sessionSecret = process.env.SECRET || 'corey'
+
+options.key = fs.readFileSync(process.env.KEY) || fs.readFileSync('./CA/server.key')
+options.cert = fs.readFileSync(process.env.CERT) || fs.readFileSync('./CA/server.crt')
+if (process.env.CA)
+  options.ca = fs.readFileSync(process.env.CA) || ""
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
@@ -33,6 +41,18 @@ app.use((req, res, next) => {
 
   next()
 })
+
+app.use((req, res, next) => {
+  d('req.protocol', req.protocol)
+  d('req.headers.host', req.headers.host)
+  if (req.protocol === 'http' && !(req.headers.host.includes('localhost')))
+    res.redirect(`https://${req.headers.host}${req.url}`)
+  next()
+})
+
+https.createServer(options, app).listen(443, () => {
+  console.log("server starting on port:443")
+});
 
 app.listen(port, () => {
   console.log('server is enable...')
